@@ -1,0 +1,22 @@
+[package]
+name = "ve"
+version = "0.1.0"
+authors = ["oded@kzencorp.com <oded@kzencorp.com>"]
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "ve"
+crate-type = ["staticlib", "dylib"]
+
+[build-dependencies]
+neon-build = "0.2.0"
+
+[dependencies]
+neon = "0.2.0"
+serde = "1.0.75"
+serde_json = "1.0.26"
+serde_derive = "1.0.75"
+centipede = { git = "https://github.com/KZen-networks/centipede", branch = "feature/from-zero" }
+curv = { git = "https://github.com/KZen-networks/curv", features =  ["ec_secp256k1"], branch = "feature/from-zero" }
+hex = "0.4.0"
