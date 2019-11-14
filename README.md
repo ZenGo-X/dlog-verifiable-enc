@@ -27,8 +27,7 @@ $ mocha
   Jan Camenisch and Victor Shoup, CRYPTO 2003
   
 \[BBBPWM] [
-  _Practical Verifiable Encryption and Decryption
-   of Discrete Logarithms_
+  _Bulletproofs: Short Proofs for Confidential Transactions and More_
 ](https://eprint.iacr.org/2017/1066.pdf),
 Benedikt B¨unz, Jonathan Bootle, Dan Boneh, Andrew Poelstra, Pieter Wuille and Greg Maxwell, IEEE S&P 2018
   
