@@ -32,19 +32,17 @@ describe('Test verifiable DL encryption', () => {
     });
 
     it('decrypt encryption', () => {
-        const encryptionRes = encrypt(encryptionKeyHex, secretKeyHex);
-        const secretKeyHexNew = decrypt(decryptionKeyHex, encryptionRes[1]);
+        const { ciphertexts } = encrypt(encryptionKeyHex, secretKeyHex);
+        const secretKeyHexNew = decrypt(decryptionKeyHex, ciphertexts);
         assert(typeof secretKeyHexNew === 'string');
         assert(secretKeyHexNew === secretKeyHex,
             'value returned from decryption does not equal the encrypted secret');
     });
 
     it('prove encryption of discrete logarithm', () => {
-        const encryptionRes = encrypt(encryptionKeyHex, secretKeyHex);
-        const witness = encryptionRes[0];
-        const secretEncryptions = encryptionRes[1];
-        const proof = prove(encryptionKeyHex, witness, secretEncryptions);
-        const isVerified = verify(proof, encryptionKeyHex, publicKeyHex, secretEncryptions);
+        const { witness, ciphertexts } = encrypt(encryptionKeyHex, secretKeyHex);
+        const proof = prove(encryptionKeyHex, witness, ciphertexts);
+        const isVerified = verify(proof, encryptionKeyHex, publicKeyHex, ciphertexts);
         assert(isVerified, "failed proof verification");
     });
 });

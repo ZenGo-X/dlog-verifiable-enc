@@ -87,13 +87,16 @@ export class Proof {
     }
 }
 
-export function encrypt(encryptionKeyHex: string, secretHex: string): [Witness, Helgamalsegmented] {
+export interface EncryptionResult {
+    witness: Witness,
+    ciphertexts: Helgamalsegmented
+}
+
+export function encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult {
     const res = JSON.parse(bindings.ve_encrypt(encryptionKeyHex, secretHex));
     const witness: Witness = Witness.fromPlain(res[0]);
-    return [
-        Witness.fromPlain(res[0]),
-        Helgamalsegmented.fromPlain(res[1])
-    ];
+    const ciphertexts: Helgamalsegmented = Helgamalsegmented.fromPlain(res[1]);
+    return { witness, ciphertexts };
 }
 
 export function decrypt(decryptionKeyHex: string, encryptions: Helgamalsegmented): FE {
