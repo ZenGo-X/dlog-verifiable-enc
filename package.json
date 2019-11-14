@@ -2,7 +2,7 @@
   "name": "dlog-verifiable-enc",
   "version": "0.1.0",
   "description": "Practical Verifiable Encryption and Decryption of Discrete Logarithms (Camenisch, Shoup '03)",
-  "main": "index.js",
+  "main": "./dist/src/index.js",
   "author": "oleiba",
   "license": "GPL-3.0",
   "scripts": {
