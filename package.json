@@ -4,7 +4,8 @@
   "description": "Practical Verifiable Encryption and Decryption of Discrete Logarithms (Camenisch, Shoup '03)",
   "main": "./dist/src/index.js",
   "types": "./dist/types/index.d.ts",
-  "author": "oleiba",
+  "repository": "https://github.com/KZen-networks/dlog-verifiable-enc",
+  "author": "Oded Leiba <oded@kzencorp.com>",
   "license": "GPL-3.0",
   "scripts": {
     "clean": "rm -rf dist",
