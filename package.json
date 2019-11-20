@@ -10,7 +10,8 @@
     "clean": "rm -rf dist",
     "build-rust": "neon build -r",
     "build-ts": "tsc",
-    "build": "npm run build-rust && npm run build-ts"
+    "build": "npm run build-rust && npm run build-ts",
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.10",
