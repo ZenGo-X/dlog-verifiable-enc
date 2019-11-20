@@ -13,8 +13,7 @@
     "build-ts": "tsc",
     "build": "npm run build-rust && npm run build-ts",
     "test": "mocha",
-    "prepublishOnly": "npm run build && npm test",
-    "postinstall": "npm run build-rust"
+    "prepublishOnly": "npm run build && npm test"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.10",
