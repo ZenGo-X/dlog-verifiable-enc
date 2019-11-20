@@ -1,6 +1,6 @@
 {
   "name": "dlog-verifiable-enc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Practical Verifiable Encryption and Decryption of Discrete Logarithms (Camenisch, Shoup '03)",
   "main": "./dist/src/index.js",
   "types": "./dist/types/index.d.ts",
