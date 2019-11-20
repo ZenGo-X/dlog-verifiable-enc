@@ -1,6 +1,6 @@
 {
   "name": "dlog-verifiable-enc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Practical Verifiable Encryption and Decryption of Discrete Logarithms (Camenisch, Shoup '03)",
   "main": "./dist/src/index.js",
   "types": "./dist/types/index.d.ts",
@@ -14,7 +14,7 @@
     "build": "npm run build-rust && npm run build-ts",
     "test": "mocha",
     "prepublishOnly": "npm run build && npm test",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build-rust"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.10",
