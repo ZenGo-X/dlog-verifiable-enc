@@ -13,7 +13,7 @@
     "build-ts": "tsc",
     "build": "npm run build-rust && npm run build-ts",
     "test": "mocha",
-    "prepublishOnly": "npm test && npm run build",
+    "prepublishOnly": "npm run build && npm test",
     "postinstall": "npm run build"
   },
   "devDependencies": {
@@ -27,7 +27,6 @@
     "tslib": "^1.9.3",
     "typescript": "^3.4.5"
   },
-  "private": true,
   "dependencies": {},
   "engines": {
     "node": ">= 10.16.0",
