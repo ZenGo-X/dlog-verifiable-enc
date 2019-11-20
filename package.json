@@ -11,6 +11,8 @@
     "build-rust": "neon build -r",
     "build-ts": "tsc",
     "build": "npm run build-rust && npm run build-ts",
+    "test": "mocha",
+    "prepublishOnly": "npm test && npm run build",
     "postinstall": "npm run build"
   },
   "devDependencies": {
@@ -25,5 +27,9 @@
     "typescript": "^3.4.5"
   },
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "engines": {
+    "node": ">= 10.16.0",
+    "npm": ">= 6.9.0"
+  }
 }

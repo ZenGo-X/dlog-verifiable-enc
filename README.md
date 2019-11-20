@@ -6,7 +6,7 @@ Uses Bulletproofs \[BBBPWM] for Range proofs.
 
 ## Installation
 
-1. Install nightly Rust.
+1. Install nightly Rust (tested on 1.36.0-nightly).
 2. Clone the repoistory:
 ```sh
 $ git clone https://github.com/KZen-networks/dlog-verifiable-enc
