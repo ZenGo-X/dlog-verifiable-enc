@@ -29,12 +29,6 @@ export class Helgamalsegmented {
     public static fromPlain(plain: any): Helgamalsegmented {
         return new Helgamalsegmented(plain.DE);
     }
-
-    public toJSON(): any {
-        return {
-            DE: this.DE
-        }
-    }
 }
 
 interface HomoELGamalProof {
@@ -102,7 +96,7 @@ export function encrypt(encryptionKeyHex: string, secretHex: string): Encryption
 export function decrypt(decryptionKeyHex: string, encryptions: Helgamalsegmented): FE {
     const secretKeyHex: string = bindings.ve_decrypt(
         decryptionKeyHex,
-        JSON.stringify(encryptions.toJSON())
+        JSON.stringify(encryptions)
     );
     return secretKeyHex.padStart(64, '0');
 }
