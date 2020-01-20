@@ -1,6 +1,6 @@
 # Verifiable Encryption of Elliptic Curve Discrete Log
 
-Implementation Dlog VE in Javascript (with Rust bindings) on top of the elliptic curve Secp256k1.<br>
+Implementation of Dlog VE in Javascript (with Rust bindings) on top of the elliptic curve Secp256k1.<br>
 
 
 ## Installation
