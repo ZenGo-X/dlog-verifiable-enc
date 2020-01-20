@@ -48,6 +48,70 @@ Run the verifer of all the zk proofs. Accept only if all value to true
 
 The encryption is done segment-by-segment which enables also a use case of fair swap of secrets. 
 
+## API
+
+#### `interface EncryptionResult`
+Composed of the following structure:
+```
+{
+    witness: Witness,
+    ciphertexts: Helgamalsegmented
+}
+```
+
+#### `ve.encrypt(encryptionKey: Buffer, secret: Buffer): EncryptionResult` 
+Encrypt a 32-byte scalar `secret` using 64-byte EC public key `encryptionKey`. 
+
+#### `ve.decrypt(decryptionKey: Buffer, ciphertexts: Helgamalsegmented): Buffer`
+Decrypt ciphertexts (encrypted segments) `ciphertexts` using 32-byte scalar `decryptionKey` to get
+a 32-byte scalar.
+
+#### `ve.prove(encryptionKey: Buffer, encryptionResult: EncryptionResult): Proof`
+Prove that `encryptionResult` is an encryption of a discrete logarithm under a 64-byte EC public key `encryptionKey`.
+
+#### `ve.verify(proof: Proof, encryptionKey: Buffer, publicKey: Buffer, ciphertexts: Helgamalsegmented): boolean`
+Verify that `proof` proves that `ciphertexts` are a result of an encryption of a discrete logarithm of a 64-byte EC public key `publicKey` under the 64-byte  EC public key `encryptionKey`
+
+## Example
+
+```js
+import ve from 'dlog-verifiable-enc';
+import {ec as EC} from 'elliptic';
+const ec = new EC('secp256k1');
+import assert from 'assert';
+
+// generate encryption/decryption EC key pair
+const encKeyPair = ec.genKeyPair();
+const decryptionKey = encKeyPair
+    .getPrivate()
+    .toBuffer();
+const encryptionKey = Buffer.from(
+    encKeyPair
+        .getPublic()
+        .encode('hex', false)
+        .substr(2),  // (x,y);
+    'hex');
+
+// generate EC key pair (the discrete logarithm to be encrypted)
+const keyPair = ec.genKeyPair();
+const secretKey = keyPair
+    .getPrivate()
+    .toBuffer();
+const publicKey = Buffer.from(
+    keyPair
+        .getPublic()
+        .encode('hex', false)
+        .substr(2),  // (x,y)
+    'hex');
+
+const encryptionResult = ve.encrypt(encryptionKey, secretKey);
+const secretKeyNew = ve.decrypt(decryptionKey, encryptionResult.ciphertexts);
+assert(secretKeyNew.equals(secretKey));
+
+const proof = ve.prove(encryptionKey, encryptionResult);
+const isVerified = ve.verify(proof, encryptionKey, publicKey, encryptionResult.ciphertexts);
+assert(isVerified);
+```
 
 ## Contact
 
