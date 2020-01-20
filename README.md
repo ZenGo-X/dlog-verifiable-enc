@@ -72,6 +72,45 @@ Prove that `encryptionResult` is an encryption of a discrete logarithm under a 6
 #### `ve.verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, ciphertexts: Helgamalsegmented): boolean`
 Verify that `proof` proves that `ciphertexts` are a result of an encryption of a discrete logarithm of a 64-byte hex encoded EC public key `publicKeyHex` under the 64-byte hex encoded EC public key `encryptionKeyHex`
 
+## Example
+
+```js
+import ve from 'dlog-verifiable-enc';
+import {ec as EC} from 'elliptic';
+const ec = new EC('secp256k1');
+import assert from 'assert';
+
+// generate encryption/decryption EC key pair
+const encKeyPair = ec.genKeyPair();
+const decryptionKeyHex = encKeyPair
+    .getPrivate()
+    .toBuffer()
+    .toString('hex');
+const encryptionKeyHex = encKeyPair
+     .getPublic()
+     .encode('hex', false)
+     .substr(2);  // (x,y);
+
+// generate EC key pair (the discrete logarithm to be encrypted)
+const keyPair = ec.genKeyPair();
+const secretKeyHex = keyPair
+    .getPrivate()
+    .toBuffer()
+    .toString('hex');
+const publicKeyHex = keyPair
+    .getPublic()
+    .encode('hex', false)
+    .substr(2);  // (x,y)
+
+const encryptionResult = ve.encrypt(encryptionKeyHex, secretKeyHex);
+const secretKeyHexNew = ve.decrypt(decryptionKeyHex, encryptionResult.ciphertexts);
+assert(secretKeyHexNew === secretKeyHex);
+
+const proof = ve.prove(encryptionKeyHex, encryptionResult);
+const isVerified = ve.verify(proof, encryptionKeyHex, publicKeyHex, encryptionResult.ciphertexts);
+assert(isVerified);
+```
+
 ## Contact
 
 Feel free to [reach out](mailto:github@kzencorp.com) or join the KZen Research [Telegram](https://t.me/kzen_research) for discussions on code and research.

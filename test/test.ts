@@ -1,6 +1,6 @@
 import ve from '../src';
 import assert from 'assert';
-const EC = require('elliptic').ec;
+import {ec as EC} from 'elliptic';
 const ec = new EC('secp256k1');
 
 describe('Test verifiable DL encryption', () => {
