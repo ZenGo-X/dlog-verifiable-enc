@@ -86,36 +86,36 @@ export interface EncryptionResult {
     ciphertexts: Helgamalsegmented
 }
 
-function encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult {
-    const res = JSON.parse(bindings.ve_encrypt(encryptionKeyHex, secretHex));
+function encrypt(encryptionKey: Buffer, secret: Buffer): EncryptionResult {
+    const res = JSON.parse(bindings.ve_encrypt(encryptionKey.toString('hex'), secret.toString('hex')));
     const witness: Witness = Witness.fromPlain(res[0]);
     const ciphertexts: Helgamalsegmented = Helgamalsegmented.fromPlain(res[1]);
     return { witness, ciphertexts };
 }
 
-function decrypt(decryptionKeyHex: string, ciphertexts: Helgamalsegmented): string {
+function decrypt(decryptionKey: Buffer, ciphertexts: Helgamalsegmented): Buffer {
     const secretKeyHex: string = bindings.ve_decrypt(
-        decryptionKeyHex,
+        decryptionKey.toString('hex'),
         JSON.stringify(ciphertexts)
     );
-    return secretKeyHex.padStart(64, '0');
+    return Buffer.from(secretKeyHex.padStart(64, '0'), 'hex');
 }
 
-function prove(encryptionKeyHex: string, encryptionResult: EncryptionResult): Proof {
+function prove(encryptionKey: Buffer, encryptionResult: EncryptionResult): Proof {
     const proof = JSON.parse(
         bindings.ve_prove(
-            encryptionKeyHex,
+            encryptionKey.toString('hex'),
             JSON.stringify(encryptionResult.witness),
             JSON.stringify(encryptionResult.ciphertexts))
     );
     return Proof.fromPlain(proof);
 }
 
-function verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, ciphertexts: Helgamalsegmented): boolean {
+function verify(proof: Proof, encryptionKey: Buffer, publicKey: Buffer, ciphertexts: Helgamalsegmented): boolean {
     return bindings.ve_verify(
         JSON.stringify(proof),
-        encryptionKeyHex,
-        publicKeyHex,
+        encryptionKey.toString('hex'),
+        publicKey.toString('hex'),
         JSON.stringify(ciphertexts));
 }
 

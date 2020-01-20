@@ -59,18 +59,18 @@ Composed of the following structure:
 }
 ```
 
-#### `ve.encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult` 
-Encrypt a 32-byte hex encoded scalar `secretHex` using 64-byte hex encoded EC public key `encryptionKeyHex`. 
+#### `ve.encrypt(encryptionKey: Buffer, secret: Buffer): EncryptionResult` 
+Encrypt a 32-byte scalar `secret` using 64-byte EC public key `encryptionKey`. 
 
-#### `ve.decrypt(decryptionKeyHex: string, ciphertexts: Helgamalsegmented): string`
-Decrypt ciphertexts (encrypted segments) `ciphertexts` using 32-byte hex encoded scalar `decryptionKeyHex` to get
-a 32-byte hex encoded scalar.
+#### `ve.decrypt(decryptionKey: Buffer, ciphertexts: Helgamalsegmented): Buffer`
+Decrypt ciphertexts (encrypted segments) `ciphertexts` using 32-byte scalar `decryptionKey` to get
+a 32-byte scalar.
 
-#### `ve.prove(encryptionKeyHex: string, encryptionResult: EncryptionResult): Proof`
-Prove that `encryptionResult` is an encryption of a discrete logarithm under a 64-byte hex encoded EC public key `encryptionKeyHex`.
+#### `ve.prove(encryptionKey: Buffer, encryptionResult: EncryptionResult): Proof`
+Prove that `encryptionResult` is an encryption of a discrete logarithm under a 64-byte EC public key `encryptionKey`.
 
-#### `ve.verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, ciphertexts: Helgamalsegmented): boolean`
-Verify that `proof` proves that `ciphertexts` are a result of an encryption of a discrete logarithm of a 64-byte hex encoded EC public key `publicKeyHex` under the 64-byte hex encoded EC public key `encryptionKeyHex`
+#### `ve.verify(proof: Proof, encryptionKey: Buffer, publicKey: Buffer, ciphertexts: Helgamalsegmented): boolean`
+Verify that `proof` proves that `ciphertexts` are a result of an encryption of a discrete logarithm of a 64-byte EC public key `publicKey` under the 64-byte  EC public key `encryptionKey`
 
 ## Example
 
@@ -82,32 +82,34 @@ import assert from 'assert';
 
 // generate encryption/decryption EC key pair
 const encKeyPair = ec.genKeyPair();
-const decryptionKeyHex = encKeyPair
+const decryptionKey = encKeyPair
     .getPrivate()
-    .toBuffer()
-    .toString('hex');
-const encryptionKeyHex = encKeyPair
-     .getPublic()
-     .encode('hex', false)
-     .substr(2);  // (x,y);
+    .toBuffer();
+const encryptionKey = Buffer.from(
+    encKeyPair
+        .getPublic()
+        .encode('hex', false)
+        .substr(2),  // (x,y);
+    'hex');
 
 // generate EC key pair (the discrete logarithm to be encrypted)
 const keyPair = ec.genKeyPair();
-const secretKeyHex = keyPair
+const secretKey = keyPair
     .getPrivate()
-    .toBuffer()
-    .toString('hex');
-const publicKeyHex = keyPair
-    .getPublic()
-    .encode('hex', false)
-    .substr(2);  // (x,y)
+    .toBuffer();
+const publicKey = Buffer.from(
+    keyPair
+        .getPublic()
+        .encode('hex', false)
+        .substr(2),  // (x,y)
+    'hex');
 
-const encryptionResult = ve.encrypt(encryptionKeyHex, secretKeyHex);
-const secretKeyHexNew = ve.decrypt(decryptionKeyHex, encryptionResult.ciphertexts);
-assert(secretKeyHexNew === secretKeyHex);
+const encryptionResult = ve.encrypt(encryptionKey, secretKey);
+const secretKeyNew = ve.decrypt(decryptionKey, encryptionResult.ciphertexts);
+assert(secretKeyNew.equals(secretKey));
 
-const proof = ve.prove(encryptionKeyHex, encryptionResult);
-const isVerified = ve.verify(proof, encryptionKeyHex, publicKeyHex, encryptionResult.ciphertexts);
+const proof = ve.prove(encryptionKey, encryptionResult);
+const isVerified = ve.verify(proof, encryptionKey, publicKey, encryptionResult.ciphertexts);
 assert(isVerified);
 ```
 
