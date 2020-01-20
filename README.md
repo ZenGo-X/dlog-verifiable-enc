@@ -64,7 +64,7 @@ Encrypt a 32-byte hex encoded scalar `secretHex` using 64-byte hex encoded EC pu
 
 #### `ve.decrypt(decryptionKeyHex: string, ciphertexts: Helgamalsegmented): string`
 Decrypt ciphertexts (encrypted segments) `ciphertexts` using 32-byte hex encoded scalar `decryptionKeyHex` to get
-a 32-byte scalar.
+a 32-byte hex encoded scalar.
 
 #### `ve.prove(encryptionKeyHex: string, encryptionResult: EncryptionResult): Proof`
 Prove the encryption of a discrete logarithm under a 64-byte hex encoded EC public key `encryptionKeyHex`.
