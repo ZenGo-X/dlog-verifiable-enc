@@ -1,11 +1,11 @@
-const path = require('path');
-const bindings : any = require(path.join(__dirname, '../../native'));
+import path from 'path';
+const bindings : any = require(path.join(__dirname, '../../../native'));
 
 import {FE, GE} from './common';
 
 export class Witness {
     constructor(
-        public x_vec: string[],
+        private x_vec: string[],
         private r_vec: string[]
     ) {}
 
@@ -86,35 +86,37 @@ export interface EncryptionResult {
     ciphertexts: Helgamalsegmented
 }
 
-export function encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult {
+function encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult {
     const res = JSON.parse(bindings.ve_encrypt(encryptionKeyHex, secretHex));
     const witness: Witness = Witness.fromPlain(res[0]);
     const ciphertexts: Helgamalsegmented = Helgamalsegmented.fromPlain(res[1]);
     return { witness, ciphertexts };
 }
 
-export function decrypt(decryptionKeyHex: string, encryptions: Helgamalsegmented): FE {
+function decrypt(decryptionKeyHex: string, ciphertexts: Helgamalsegmented): string {
     const secretKeyHex: string = bindings.ve_decrypt(
         decryptionKeyHex,
-        JSON.stringify(encryptions)
+        JSON.stringify(ciphertexts)
     );
     return secretKeyHex.padStart(64, '0');
 }
 
-export function prove(encryptionKeyHex: string, witness: Witness, encryptions: Helgamalsegmented): Proof {
+function prove(encryptionKeyHex: string, encryptionResult: EncryptionResult): Proof {
     const proof = JSON.parse(
         bindings.ve_prove(
             encryptionKeyHex,
-            JSON.stringify(witness),
-            JSON.stringify(encryptions))
+            JSON.stringify(encryptionResult.witness),
+            JSON.stringify(encryptionResult.ciphertexts))
     );
     return Proof.fromPlain(proof);
 }
 
-export function verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, encryptions: Helgamalsegmented): boolean {
+function verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, ciphertexts: Helgamalsegmented): boolean {
     return bindings.ve_verify(
         JSON.stringify(proof),
         encryptionKeyHex,
         publicKeyHex,
-        JSON.stringify(encryptions));
+        JSON.stringify(ciphertexts));
 }
+
+export default {encrypt, decrypt, prove, verify};

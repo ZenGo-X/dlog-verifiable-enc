@@ -12,7 +12,7 @@
     "build-rust": "neon build -r",
     "build-ts": "tsc",
     "build": "npm run build-rust && npm run build-ts",
-    "test": "mocha",
+    "test": "mocha ./dist/lib/test",
     "prepublishOnly": "npm install && npm run build && npm test"
   },
   "devDependencies": {

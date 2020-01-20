@@ -1,13 +1,13 @@
-const {encrypt, decrypt, prove, verify} = require('../dist/src');
-const assert = require('assert');
+import ve from '../src';
+import assert from 'assert';
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 
 describe('Test verifiable DL encryption', () => {
-    let decryptionKeyHex;
-    let encryptionKeyHex;
-    let secretKeyHex;
-    let publicKeyHex;
+    let decryptionKeyHex: string;
+    let encryptionKeyHex: string;
+    let secretKeyHex: string;
+    let publicKeyHex: string;
 
     before(() => {
         const encKeyPair = ec.genKeyPair();
@@ -32,17 +32,16 @@ describe('Test verifiable DL encryption', () => {
     });
 
     it('decrypt encryption', () => {
-        const { ciphertexts } = encrypt(encryptionKeyHex, secretKeyHex);
-        const secretKeyHexNew = decrypt(decryptionKeyHex, ciphertexts);
-        assert(typeof secretKeyHexNew === 'string');
+        const { ciphertexts } = ve.encrypt(encryptionKeyHex, secretKeyHex);
+        const secretKeyHexNew = ve.decrypt(decryptionKeyHex, ciphertexts);
         assert(secretKeyHexNew === secretKeyHex,
             'value returned from decryption does not equal the encrypted secret');
     });
 
     it('prove encryption of discrete logarithm', () => {
-        const { witness, ciphertexts } = encrypt(encryptionKeyHex, secretKeyHex);
-        const proof = prove(encryptionKeyHex, witness, ciphertexts);
-        const isVerified = verify(proof, encryptionKeyHex, publicKeyHex, ciphertexts);
+        const encryptionResult = ve.encrypt(encryptionKeyHex, secretKeyHex);
+        const proof = ve.prove(encryptionKeyHex, encryptionResult);
+        const isVerified = ve.verify(proof, encryptionKeyHex, publicKeyHex, encryptionResult.ciphertexts);
         assert(isVerified, "failed proof verification");
     });
 });

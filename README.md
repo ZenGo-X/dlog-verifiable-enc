@@ -48,6 +48,29 @@ Run the verifer of all the zk proofs. Accept only if all value to true
 
 The encryption is done segment-by-segment which enables also a use case of fair swap of secrets. 
 
+## API
+
+#### `interface EncryptionResult`
+Composed of the following structure:
+```
+{
+    witness: Witness,
+    ciphertexts: Helgamalsegmented
+}
+```
+
+#### `ve.encrypt(encryptionKeyHex: string, secretHex: string): EncryptionResult` 
+Encrypt a 32-byte hex encoded scalar `secretHex` using 64-byte hex encoded EC public key `encryptionKeyHex`. 
+
+#### `ve.decrypt(decryptionKeyHex: string, ciphertexts: Helgamalsegmented): string`
+Decrypt ciphertexts (encrypted segments) `ciphertexts` using 32-byte hex encoded scalar `decryptionKeyHex` to get
+a 32-byte scalar.
+
+#### `ve.prove(encryptionKeyHex: string, encryptionResult: EncryptionResult): Proof`
+Prove the encryption of a discrete logarithm under a 64-byte hex encoded EC public key `encryptionKeyHex`.
+
+#### `ve.verify(proof: Proof, encryptionKeyHex: string, publicKeyHex: string, ciphertexts: Helgamalsegmented): boolean`
+Verify that `proof` proves that `ciphertexts` are a result of an encryption of a discrete logarithm of a 64-byte hex encoded EC public key `publicKeyHex` under the 64-byte hex encoded EC public key `encryptionKeyHex`
 
 ## Contact
 
