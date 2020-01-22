@@ -6,7 +6,12 @@ Implementation of Dlog VE in Javascript (with Rust bindings) on top of the ellip
 ## Installation
 
 1. Install nightly Rust (tested on 1.36.0-nightly).
-2. Clone the repoistory:
+2. Install the package:
+```sh
+$ yarn add dlog-verifiable-enc
+```
+OR
+clone the repository:
 ```sh
 $ git clone https://github.com/KZen-networks/dlog-verifiable-enc
 $ cd ./dlog-verifiable-enc
