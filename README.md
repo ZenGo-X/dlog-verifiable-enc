@@ -51,7 +51,7 @@ Verify that `proof` proves that `ciphertexts` are a result of an encryption of a
 ## Example
 
 ```js
-import ve from 'dlog-verifiable-enc';
+import {ve} from 'dlog-verifiable-enc';
 import {ec as EC} from 'elliptic';
 const ec = new EC('secp256k1');
 import assert from 'assert';
@@ -118,7 +118,7 @@ Run the verifer of all the zk proofs. Accept only if all value to true
 
 ---
 
-**(*)** Both 2) and 3) are standatd proof of knowledge sigma protocols, we use Fiat Shamir transforom to get their non interactive versions. The protocols can be found in [Curv](https://github.com/KZen-networks/curv) library([2](https://github.com/KZen-networks/curv/blob/master/src/cryptographic_primitives/proofs/sigma_correct_homomorphic_elgamal_enc.rs#L17),[3](https://github.com/KZen-networks/curv/blob/master/src/cryptographic_primitives/proofs/sigma_correct_homomorphic_elgamal_encryption_of_dlog.rs#L17))
+**(*)** Both 2) and 3) are standard proof of knowledge sigma protocols, we use Fiat Shamir transforom to get their non interactive versions. The protocols can be found in [Curv](https://github.com/KZen-networks/curv) library([2](https://github.com/KZen-networks/curv/blob/master/src/cryptographic_primitives/proofs/sigma_correct_homomorphic_elgamal_enc.rs#L17),[3](https://github.com/KZen-networks/curv/blob/master/src/cryptographic_primitives/proofs/sigma_correct_homomorphic_elgamal_encryption_of_dlog.rs#L17))
 
 
 
