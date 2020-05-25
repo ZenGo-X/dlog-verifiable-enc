@@ -96,7 +96,7 @@ describe('Test gradual release', () => {
         p2 = createParty();
     });
 
-    it.only('creates share', () => {
+    it('creates share', () => {
         // parties exchange encryption keys, each encrypts to segments
         const [p1FirstMessage, p1Share] = gr.createShare(
             p1.secretKey,
@@ -131,13 +131,9 @@ describe('Test gradual release', () => {
 
         // p1 and p2 can now extract the counterparty's secret
         const p1SecretKeyCandidate = gr.extractSecret(p1FirstMessage, p1SegmentProofs, p2.decryptionKey);
-        console.log('p1SecretKeyCandidate =', p1SecretKeyCandidate);
-        console.log('p1.secretKey =', p1.secretKey);
         assert(p1SecretKeyCandidate.equals(p1.secretKey));
 
         const p2SecretKeyCandidate = gr.extractSecret(p2FirstMessage, p2SegmentProofs, p1.decryptionKey);
-        console.log('p2SecretKeyCandidate =', p2SecretKeyCandidate);
-        console.log('p2.secretKey =', p2.secretKey);
         assert(p2SecretKeyCandidate.equals(p2.secretKey));
     });
 });

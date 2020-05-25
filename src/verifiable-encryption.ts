@@ -18,7 +18,6 @@ export function decrypt(decryptionKey: Buffer, ciphertexts: Helgamalsegmented): 
 }
 
 export function prove(encryptionKey: Buffer, encryptionResult: EncryptionResult): Proof {
-    console.log('encryptionResult.witness =', encryptionResult.witness);
     const proof = JSON.parse(
         bindings.ve_prove(
             encryptionKey.toString('hex'),
