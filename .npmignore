@@ -1,2 +1,5 @@
 src/
 tsconfig.json
+native/target
+native/artifacts.json
+native/index.node
