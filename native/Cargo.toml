@@ -17,6 +17,6 @@ neon = "0.2.0"
 serde = "1.0.75"
 serde_json = "1.0.26"
 serde_derive = "1.0.75"
-centipede = { git = "https://github.com/KZen-networks/centipede", branch = "feature/from-zero" }
-curv = { git = "https://github.com/KZen-networks/curv", features =  ["ec_secp256k1"], branch = "feature/from-zero" }
+centipede = { git = "https://github.com/KZen-networks/centipede", tag = "v0.2.5" }
+curv = { git = "https://github.com/KZen-networks/curv", features =  ["ec_secp256k1"], tag = "v0.2.4" }
 hex = "0.4.0"

@@ -15,8 +15,8 @@ use curv::arithmetic::traits::Converter;
 use curv::elliptic::curves::secp256_k1::Secp256k1Scalar;
 use hex;
 
-const SEGMENT_SIZE: usize = 8;
-const NUM_OF_SEGMENTS: usize = 32;
+use crate::SEGMENT_SIZE;
+use crate::NUM_OF_SEGMENTS;
 
 #[allow(non_snake_case)]
 pub fn encrypt(mut cx: FunctionContext) -> JsResult<JsString> {
