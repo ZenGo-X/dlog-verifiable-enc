@@ -124,7 +124,7 @@ Run the verifer of all the zk proofs. Accept only if all value to true
 
 ## Contact
 
-Feel free to [reach out](mailto:github@kzencorp.com) or join the KZen Research [Telegram](https://t.me/kzen_research) for discussions on code and research.
+Feel free to [reach out](mailto:github@kzencorp.com) or join the ZenGo-X [Telegram](https://t.me/zengo_x) for discussions on code and research.
 
 ## References
 
