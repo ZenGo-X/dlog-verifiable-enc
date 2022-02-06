@@ -109,7 +109,7 @@ Finally combine all decrypted segments to get `x`
 
 #### Prove(*)
   1) For each `D_k` the prover publishes a Bulletproof range proof [BBBPWM]. This proves that `D_k` is a Pedersen commitment with value smaller than `2^l` where `l` is the segment size in bits.
-  2) For each `k`: The Prover publishes a zero knowledge proof that `{D_k,E_k}` is correct ElGamal encryption, witness is `(x, r_k)`.
+  2) For each `k`: The Prover publishes a zero knowledge proof that `{D_k,E_k}` is correct ElGamal encryption, witness is `([x]_k, r_k)`.
   3) The Prover publishes a zero knowledge proof that `{wsum{D_k}, wsum{E_k}}` is correct ElGamal encryption, witness is `(x, wsum{r_k})`. we use `wsum` to note a weighted sum. This sigma protocol also uses `Q` in the statement and the prover shows in zk that DLog of `Q` is the same witness.    
 
 
@@ -137,5 +137,5 @@ Feel free to [reach out](mailto:github@kzencorp.com) or join the ZenGo-X [Telegr
 \[BBBPWM] [
   _Bulletproofs: Short Proofs for Confidential Transactions and More_
 ](https://eprint.iacr.org/2017/1066.pdf),
-Benedikt B¨unz, Jonathan Bootle, Dan Boneh, Andrew Poelstra, Pieter Wuille and Greg Maxwell, IEEE S&P 2018
+Benedikt Bünz, Jonathan Bootle, Dan Boneh, Andrew Poelstra, Pieter Wuille and Greg Maxwell, IEEE S&P 2018
   
